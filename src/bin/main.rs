@@ -61,6 +61,7 @@ async fn main(spawner: Spawner) {
 
     let timg0 = TimerGroup::new(peripherals.TIMG0);
     esp_rtos::start(timg0.timer0);
+    esp_println::logger::init_logger_from_env();
 
     // spawner.spawn(bullshit()).unwrap();
 
