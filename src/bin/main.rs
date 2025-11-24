@@ -92,7 +92,7 @@ async fn main(spawner: Spawner) {
     spawner.spawn(net_task(net_runner)).unwrap();
 
         sta_control
-            .connect_by_ssid(SSID, None, Some(Credentials::Passphrase(env!("PASSWORD"))))
+            .connect_by_ssid(SSID, None, option_env!("PASSWORD").map(Credentials::Passphrase))
             .await.unwrap();
 
     info!("Connected to {}.", SSID);
