@@ -5,5 +5,6 @@ for the ESP32. It only connects to an access point (specified in the `SSID` env 
 makes an HTTP request, and reboots.
 
 If your AP uses WPA2-Personal, you can specify the password in the `PASSWORD` env
-var. Note, that if it's open the variable must not be defined, as otherwise the
-code will expect it to be a WPA2 network.
+var. Note, that if it's an open network the variable must not be defined, as
+otherwise the code will expect it to be a WPA2 network. (This is just because I
+was to lazy to write something more complex for this example.)
