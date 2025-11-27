@@ -8,7 +8,6 @@ use embassy_net::{
     tcp::client::{TcpClient, TcpClientState},
     DhcpConfig, Runner as NetRunner, StackResources as NetStackResources,
 };
-use embassy_time::Timer;
 use embedded_io_async::Read;
 use esp_backtrace as _;
 use esp_hal::{
@@ -47,13 +46,6 @@ async fn sta_task(mut sta_runner: StaRunner<'static, 'static>) -> ! {
 async fn net_task(mut net_runner: NetRunner<'static, StaNetDevice<'static>>) -> ! {
     net_runner.run().await
 }
-#[embassy_executor::task]
-async fn bullshit() -> ! {
-    loop {
-        info!("I'm still standing.");
-        Timer::after_millis(500).await;
-    }
-}
 #[esp_rtos::main]
 async fn main(spawner: Spawner) {
     esp_bootloader_esp_idf::esp_app_desc!();
@@ -63,7 +55,6 @@ async fn main(spawner: Spawner) {
     esp_rtos::start(timg0.timer0);
     esp_println::logger::init_logger_from_env();
 
-    // spawner.spawn(bullshit()).unwrap();
 
     let stack_resources = mk_static!(FoAResources, FoAResources::new());
     let ([sta_vif, ..], foa_runner) = foa::init(
